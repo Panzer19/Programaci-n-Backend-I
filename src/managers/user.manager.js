@@ -5,7 +5,7 @@ import crypto from 'crypto'
 import CartManager from './cart.manager.js'
 const cartManager = new CartManager("./carts.json");
 
-export default class UserManager {
+class UserManager {
   constructor(path) {
     this.path = path
   }
@@ -31,22 +31,22 @@ export default class UserManager {
 
   async createUser(obj) {
     try {
-      const cart = await cartManager.createCart()
+      // const cart = await cartManager.create();
       const user = {
         id: uuidv4(),
-        cart: cart.id,
+        // cart: cart.id
         ...obj,
       };
-      console.log(user)
-      const users = await this.getUsers()
-      const userExist = users.find((u) => u.email === user.email)
-      if (userExist) throw new Error("User already exists")
-      this.#createHash(user)
-      users.push(user)
-      await fs.promises.writeFile(this.path, JSON.stringify(users))
-      return user
+      const users = await this.getUsers();
+      const userExist = users.find((u) => u.email === user.email);
+      if (userExist) throw new Error("User already exists");
+      // this.#createHash(user);
+      users.push(user);
+      console.log(users)
+      await fs.promises.writeFile(this.path, JSON.stringify(users));
+      return user;
     } catch (error) {
-      throw new Error(error)
+      throw new Error(error);
     }
   }
 
@@ -100,3 +100,7 @@ export default class UserManager {
     }
   }
 }
+
+const userManager = new UserManager('./src/data/users.json')
+
+export default userManager

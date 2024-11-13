@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import { v4 as uuidv4 } from "uuid";
+import path from "node:path";
 
 export default class ProductManager {
   constructor(path) {
